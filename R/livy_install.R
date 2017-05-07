@@ -15,7 +15,8 @@
 #' @export
 livy_install <- function(version       = "0.3.0",
                          spark_home    = NULL,
-                         spark_version = NULL)
+                         spark_version = NULL,
+                         url           = NULL)
 {
   version <- ensure_scalar_character(version)
 
@@ -86,10 +87,12 @@ livy_install <- function(version       = "0.3.0",
   }
 
   # construct path to livy download
-  url <- sprintf(
-    "http://archive.cloudera.com/beta/livy/livy-server-%s.zip",
-    version
-  )
+  if(is.null(url)){
+    url <- sprintf(
+      "http://archive.cloudera.com/beta/livy/livy-server-%s.zip",
+      version
+    )
+  }
 
   # download to cache directory
   ensure_directory(livy_cache)
